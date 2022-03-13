@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {  useState } from 'react';
+import InputCelsius from './components/InputCelsius.comp';
+import InputFahrenheit from './components/InputFahrenheit.comp';
 
-function App() {
+const App = () => {
+  const [celsius, setCelsius] = useState(0);
+  const [fahrenheit, setFahrenheit] = useState(0);
+
+  function toCelsius(_fahrenheit) {
+    return (_fahrenheit - 32) * 5 / 9;
+  }
+
+  function toFahrenheit(_celsius) {
+    return (_celsius * 9 / 5) + 32;
+  }
+
+  function handleCelsiusChange(e) {
+    e.preventDefault();
+    setCelsius(e.target.value.trim());
+    setFahrenheit(toFahrenheit(e.target.value.trim()));
+  }
+  function handleFahrenheitChange(e) {
+    e.preventDefault();
+    setFahrenheit(e.target.value.trim());
+}
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <h1>Temperatute Convert:</h1>
+      <InputCelsius onChange={handleCelsiusChange} value={celsius} />
+      <InputFahrenheit onChange={handleFahrenheitChange} value={fahrenheit}/>
+    </React.Fragment>
   );
 }
 
